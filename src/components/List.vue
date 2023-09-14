@@ -27,6 +27,7 @@
                 </tr>
             </tbody>
         </table>
+		<input ref="file" type="file" class="d-none">
 	</div>
 </template>
 
@@ -37,12 +38,10 @@ export default {
             return this.$store.state.employee.list;
         },
     },
+	methods: {
+    },
     mounted() {
         this.$store.dispatch('employee/get_list');
     },
 }
 </script>
-
-<style scoped>
-
-</style>

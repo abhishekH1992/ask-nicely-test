@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Sep 14, 2023 at 06:46 AM
+-- Generation Time: Sep 14, 2023 at 09:31 AM
 -- Server version: 8.1.0
 -- PHP Version: 8.2.8
 
@@ -24,38 +24,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `company`
---
-
-CREATE TABLE `company` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `comapny_name` varchar(100) NOT NULL,
-  `salary` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `employee`
 --
 
 CREATE TABLE `employee` (
   `id` int NOT NULL,
   `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(100) NOT NULL,
+  `company_name` varchar(256) NOT NULL,
+  `salary` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `company`
---
-ALTER TABLE `company`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `CMP_USER_ID_EMP_ID` (`user_id`);
 
 --
 -- Indexes for table `employee`
@@ -69,26 +51,10 @@ ALTER TABLE `employee`
 --
 
 --
--- AUTO_INCREMENT for table `company`
---
-ALTER TABLE `company`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `company`
---
-ALTER TABLE `company`
-  ADD CONSTRAINT `CMP_USER_ID_EMP_ID` FOREIGN KEY (`user_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
