@@ -24,14 +24,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         // CSV column headers
         $heading = str_getcsv(trim(fgets($file)), ',', '"');
-        $accetedHeader = [
+        $acceptedHeader = [
             'Company Name',
             'Employee Name',
             'Email Address',
             'Salary'
         ];
 
-        if ($heading !== $accetedHeader) {
+        if ($heading !== $acceptedHeader) {
             fclose($file);
             $connection->close();
             echo json_encode(['status' => 'error', 'msg' => 'CSV column heading is not correct. It should be Company Name, Employee Name, Email Address, Salary and in same order.']);
@@ -39,40 +39,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         } else {
             $data = [];
 
+            $connection->query("SET AUTOCOMMIT=0");
+            $connection->query("START TRANSACTION");
+
             // Parse data from CSV file line by line        
             while ($row = fgetcsv($file)){
                 if(validate($row)){
-                    array_push($data, $row);
+                    try {
+                        $query = 'INSERT INTO employee (name, email, company_name, salary) VALUES ("'.$row[1].'", "'.$row[2].'", "'.$row[0].'", '.$row[3].');';
+                        $connection->query($query);
+                    } catch(Exception $e) {
+                        $connection->rollback();
+                        fclose($file);
+                        $connection->close();
+                        echo json_encode(['status' => 'error', 'msg' => $e->getMessage()]);
+                        exit;
+                        die();
+                    }
                 } else {
-                    $isValidationFailed = true;
+                    $connection->rollback();
+                    fclose($file);
+                    $connection->close();
+                    echo json_encode(['status' => 'error', 'msg' => 'Please make sure all the columns has value. Salary should be in number format and check email format.']);
                     exit;
+                    die();
                 }
             }
 
-            if($isValidationFailed){
-                fclose($file);
-                $connection->close();
-                echo json_encode(['status' => 'error', 'msg' => 'Please make sure all the columns has value. Salary should be in number format and check email format.']);
-                die();
-            }
-            $query = null;
-            foreach($data as $d) {
-                $query .= 'INSERT INTO employee (name, email, company_name, salary) VALUES ("'.$d[1].'", "'.$d[2].'", "'.$d[0].'", '.$d[3].');';
-            }
-
-            try {
-                $connection->multi_query($query);
-            } catch(Exception $e) {
-                $connection->rollback();
-                fclose($file);
-                $connection->close();
-                echo json_encode(['status' => 'error', 'msg' => $e->getMessage()]);
-                die();
-            }
+            $connection->query("COMMIT");
+            $connection->query("SET AUTOCOMMIT=1");
 
             fclose($file);
-            echo json_encode(['status' => 'success', 'msg' => 'CSV uplaoded.']);
             $connection->close();
+            echo json_encode(['status' => 'success', 'msg' => 'CSV uploaded.']);
         }      
     } else {
         echo json_encode(['status' => 'error', 'msg' => 'Please upload csv file.']);

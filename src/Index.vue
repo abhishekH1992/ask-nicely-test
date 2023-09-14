@@ -1,7 +1,5 @@
 <template>
     <div>
-        <notifications position="top right" group="success" classes="success-notification"/>
-        <notifications position="top right" group="error" classes="error-notification"/>
         <div class="container">
             <UploadFile @show-loader="showLoader"/>
             <List />
