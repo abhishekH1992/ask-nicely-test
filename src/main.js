@@ -1,4 +1,11 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import Index from './Index.vue'
+import store from './store'
 
-createApp(App).mount('#app')
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap'
+
+const app = createApp(Index)
+app.use(store)
+
+app.mount('#app')
