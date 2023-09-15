@@ -23,6 +23,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         die();
     } catch(Exception $e) {
         echo json_encode(['status' => 'error', 'msg' => $e->getMessage()]);
+        $connection->close();
+        die();
     }
 } else {
     $connection->close();
