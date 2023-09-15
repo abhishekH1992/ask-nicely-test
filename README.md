@@ -1,5 +1,12 @@
 # Ask Nicely
 
+## Techology
+```
+1. PHP
+2. Vue
+3. Docker
+```
+
 ## Docker
 ```
 docker-compose up --build
