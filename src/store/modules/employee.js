@@ -23,5 +23,8 @@ export default {
         upload_file: (context, data) => {
             return axios.post(process.env.VUE_APP_API_URL+'/api/upload-file.php', data);
         },
+        update_email: (context, data) => {
+            return axios.post(process.env.VUE_APP_API_URL+'/api/update-email.php', data);
+        },
     },
 };

@@ -74,9 +74,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo json_encode(['status' => 'success', 'msg' => 'CSV uploaded.']);
         }      
     } else {
+        $connection->close();
         echo json_encode(['status' => 'error', 'msg' => 'Please upload csv file.']);
         die();
     }
+} else {
+    $connection->close();
+    echo json_encode(['status' => 'error', 'msg' => 'Something went wrong. Please relaod the page.']);
+    die();
 }
 
 function validate($row) {
