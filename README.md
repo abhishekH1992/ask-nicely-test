@@ -7,7 +7,11 @@
 3. Docker
 ```
 
+## PHP
+In api/config.php, please update database credentials.
+
 ## Docker
+In docker-compose.yml, please update database credentials.
 ```
 docker-compose up --build
 ```
