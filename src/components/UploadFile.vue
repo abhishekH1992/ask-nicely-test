@@ -23,6 +23,7 @@ export default {
                             closeOnClick: false,
                         });
                         this.$store.dispatch('employee/get_list');
+                        this.$store.dispatch('employee/avg_salary');
                     } else {
                         this.$notify({
                             group: 'error',
