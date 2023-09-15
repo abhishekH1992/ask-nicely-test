@@ -22,6 +22,7 @@ npm run serve
 
 ## Testing
 In Sample CSV folder, there are number of csvs with different sceanrios
+
 | Scenario | CSV | Result |
 | ----------------------- |
 | Empty Comany Name | AskNicely - No Comapny.csv | Fail |
